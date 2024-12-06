@@ -1983,7 +1983,7 @@ function gettoday(){
 app.post("/startexam", async (req, res) => {
   try {
 
-    await AllExamsModel.updateOne({ setno: req.body.setno }, { $set: { status: 1 , startingTime: getCurrentTime(),date: gettoday(),totalno:req.body.totalno } });  
+    await AllExamsModel.updateOne({ setno: req.body.setno }, { $set: { status: 2 , startingTime: getCurrentTime(),date: gettoday(),totalno:req.body.totalno } });  
     res.status(200).json({ message: "Exam Published Successfully" });
     console.log("Exam Published Successfully");
   } catch (error) {
