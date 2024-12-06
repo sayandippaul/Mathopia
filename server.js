@@ -7,7 +7,8 @@ const path = require("path");
 const http = require('http');
 const server = http.createServer(app);
 const { Server } = require("socket.io");
-const io = new Server(server);
+// const io = new Server(server);
+const httpServer = http.createServer(server);
 const port = process.env.PORT || 5000
 
 var mongoose = require("mongoose");
@@ -431,20 +432,32 @@ var AllExamsModel = mongoose.model("exams", examSchema);
 
 
 
-
-
+const io = require("socket.io")(httpServer);
 
 // var usp = io.of("/user");
-io.on("connection",  function (socket) {
+io.on("connection",   (socket) => {
   console.log("usernew connected ");
   
-  socket.on("message", function (msg) {
-    console.log(msg);
-    // usp.emit("message", msg);
+  socket.on('message', (msg) => {
+    console.log('Message received:', msg);
+    // io.emit('message', msg);
   });
-
-  socket.on("disconnect", function () {
-    console.log("user disconnected");
+  socket.on('startexam', (setno) => {
+    console.log("exam starteed"+setno);
+    io.emit('startexam',setno);
+  });
+  // socket.on('setstudent',(setno))
+  socket.on('extendtime', (p) => {
+    console.log("exam extended"+p.setno+" "+p.time);
+    io.emit('extendtime',{setno:p.setno,time:p.time});
+  });
+  socket.on('endexam', (setno) => {
+    console.log("exam ended"+setno);
+    io.emit('endexam',setno);
+  });
+  
+  socket.on('disconnect', () => {
+    console.log('Client disconnected');
   });
   });
 
@@ -1970,7 +1983,7 @@ function gettoday(){
 app.post("/startexam", async (req, res) => {
   try {
 
-    await AllExamsModel.updateOne({ setno: req.body.setno }, { $set: { status: 2 , startingTime: getCurrentTime(),date: gettoday(),totalno:req.body.totalno } });  
+    await AllExamsModel.updateOne({ setno: req.body.setno }, { $set: { status: 1 , startingTime: getCurrentTime(),date: gettoday(),totalno:req.body.totalno } });  
     res.status(200).json({ message: "Exam Published Successfully" });
     console.log("Exam Published Successfully");
   } catch (error) {
@@ -2135,7 +2148,7 @@ app.post("/saveoption", async (req, res) => {
 
 
 
-app.listen(port, () => {
-  console.log(`Server Started at ${5000}`);
+httpServer.listen(port, () => {
+  console.log(`Server Started at ${port}`);
 });
 

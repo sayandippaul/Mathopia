@@ -9,7 +9,6 @@ import { useState, useEffect,useRef } from 'react';
  
 // // });
 import io from 'socket.io-client';
-var socket = io();
 // socket.emit('message', "message");
 
 
@@ -30,6 +29,8 @@ var Adminquestion = () => {
 
   // var url = "http://localhost:5000";
   var url="https://mathopia.onrender.com";
+var socket = io(url);
+
 
 useEffect(() => {
   if (!hasRun.current) {

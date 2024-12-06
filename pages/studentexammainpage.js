@@ -4,7 +4,6 @@ import Head from 'next/head';
 import {useEffect, useState,useRef } from 'react';
 
 import io from 'socket.io-client';
-var socket = io();
 
 
 
@@ -32,6 +31,8 @@ no=1;
 
 //   var url = "http://localhost:5000";
 var url="https://mathopia.onrender.com";
+var socket = io(url);
+
 
 useEffect(() => {
   if (!hasRun.current) {

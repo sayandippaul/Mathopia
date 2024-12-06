@@ -5,8 +5,6 @@ import Script from 'next/script'
 import { useState,useRef } from 'react';
 
 import io from 'socket.io-client';
-import { set } from 'mongoose';
-var socket = io();
 
 
 
@@ -20,6 +18,8 @@ var Studentallexam = () => {
 
   // var url = "http://localhost:5000";
   var url="https://mathopia.onrender.com";
+var socket = io(url);
+
 
 useEffect(() => {
   if (!hasRun.current) {

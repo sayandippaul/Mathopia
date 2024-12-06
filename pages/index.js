@@ -1,3 +1,4 @@
+"use client"
 import Image from "next/image";
 import Studenthead from "./studenthead";
 
@@ -6,9 +7,10 @@ import { Inter } from "next/font/google";
 import Studentfooter from "./studentfooter";
 import Script from "next/script";
 import { useEffect } from "react";
+// import {io} from 'socket.io-client';
 
+// var socket = io("http://localhost:5000");
 
-const inter = Inter({ subsets: ["latin"] });
 
 
 export default function Home() {
