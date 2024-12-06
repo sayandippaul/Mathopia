@@ -1,40 +1,113 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+Here’s a **README.md** file for your project:
 
-## Getting Started
+---
 
-First, run the development server:
+# Mathopia 
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### Description  
+This is a **Learning Management System (LMS)** developed as an internship project. The platform facilitates seamless interaction between **admins** and **students** to manage admissions, batches, resources, and exams. Built using **Next.js**, **Node.js**, **MongoDB**, and **Socket.io**, the system ensures efficient and real-time operations.  
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## Features  
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+### **Student Portal**  
+1. Send an admission request to the admin.  
+2. Register and log in after approval.  
+3. Access lecture videos and notes uploaded by the admin.  
+4. View exams, take them, and check results.  
+5. Update and manage their profiles.  
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+### **Admin Portal**  
+1. Approve or reject student admission requests.  
+2. Create, edit, and delete:  
+   - **Batches**  
+   - **Student Details**  
+   - **Lecture Videos and Notes**  
+   - **Exams**  
+3. Publish, start, and end exams.  
+4. Update student profiles.  
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+---
 
-## Learn More
+## Tech Stack  
 
-To learn more about Next.js, take a look at the following resources:
+- **Frontend**: Next.js  
+- **Backend**: Node.js with Express  
+- **Database**: MongoDB  
+- **Real-Time Communication**: Socket.io  
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Installation  
 
-## Deploy on Vercel
+### Prerequisites  
+- Node.js installed  
+- MongoDB running locally or a cloud database connection string  
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Steps  
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+1. Clone the repository:  
+   ```bash
+   git clone https://github.com/your-username/learning-management-system.git
+   cd learning-management-system
+   ```
+
+2. Install dependencies for the frontend and backend:  
+   ```bash
+   # Install frontend dependencies
+   cd frontend
+   npm install
+
+   # Install backend dependencies
+   cd ../backend
+   npm install
+   ```
+
+3. Set up environment variables:  
+   - Create a `.env` file in the **backend** folder and add the following:  
+     ```
+     MONGO_URI=<your-mongodb-connection-string>
+     PORT=5000
+     JWT_SECRET=<your-secret-key>
+     ```
+
+4. Start the application:  
+   ```bash
+   # Start backend
+   cd backend
+   npm run start
+
+   # Start frontend
+   cd ../frontend
+   npm run dev
+   ```
+
+5. Access the application at `http://localhost:3000`.
+
+---
+
+## Usage  
+
+- **Admin**: Manage students, batches, lectures, and exams.  
+- **Students**: Apply for admission, access resources, take exams, and view results.  
+
+---
+
+## Screenshots  
+
+Include relevant screenshots to showcase key pages, like the admin and student dashboards.
+
+---
+
+## License  
+This project is licensed under the **MIT License**.  
+
+---
+
+## Acknowledgements  
+Special thanks to my mentors and peers for their guidance throughout the project.  
+
+---
+
+Feel free to customize this further with screenshots or specific instructions unique to your project!
