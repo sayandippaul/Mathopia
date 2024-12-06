@@ -8,7 +8,9 @@ import Script from 'next/script'
 
 const Studentprofile = () => {
 
-  var url="http://localhost:5000";
+  // var url="http://localhost:5000";
+  var url="https://mathopia.onrender.com";
+
   var student;
   
   if (typeof window !== 'undefined') {

@@ -1,5 +1,7 @@
 
-var url="http://localhost:5000";
+// var url="http://localhost:5000";
+var url="https://mathopia.onrender.com";
+
 
 function login() {
     var username = document.getElementById("adminid").value;

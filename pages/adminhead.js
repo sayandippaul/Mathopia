@@ -9,7 +9,9 @@ import { useEffect } from 'react';
 const Adminhead = () => {
 // const socket = io();
 useEffect(() => {
-  var url = "http://localhost:5000";
+  // var url = "http://localhost:5000";
+  
+  var url="https://mathopia.onrender.com";
 
         window.getalllastid = () =>{
           fetch(url+"/getalllastid",{

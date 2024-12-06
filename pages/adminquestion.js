@@ -28,7 +28,9 @@ var Adminquestion = () => {
   var hasRun = useRef(false);
 
 
-  var url = "http://localhost:5000";
+  // var url = "http://localhost:5000";
+  var url="https://mathopia.onrender.com";
+
 useEffect(() => {
   if (!hasRun.current) {
     hasRun.current = true;

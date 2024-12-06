@@ -1,4 +1,6 @@
-var url = "http://localhost:5000";
+// var url = "http://localhost:5000";
+var url="https://mathopia.onrender.com";
+
 
 
 // var studentbatch=['b1','b2','b3','b4'];

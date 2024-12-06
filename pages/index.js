@@ -54,7 +54,9 @@ useEffect(() => {
 
   showbuttons();
   // var url=
-  var url = "http://localhost:5000";
+  // var url = "http://localhost:5000";
+  var url="https://mathopia.onrender.com";
+
 
   window.checkallexamend = () =>{
     fetch(url+"checkallexamend",{

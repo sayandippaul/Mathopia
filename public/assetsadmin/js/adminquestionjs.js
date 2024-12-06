@@ -1,4 +1,6 @@
-var url = "http://localhost:5000";
+// var url = "http://localhost:5000";
+var url="https://mathopia.onrender.com";
+
 // var socket = io();
 // var socket = io('http://localhost:5000'); 
 // import { socket } from "../socket";

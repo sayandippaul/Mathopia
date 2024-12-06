@@ -1,5 +1,7 @@
 
-var url="http://localhost:5000";
+// var url="http://localhost:5000";
+var url="https://mathopia.onrender.com";
+
   document.getElementById("newnotificationbutton").onclick = function() {
     document.getElementById("showinputnotification").style.display = "block";
     document.getElementById("showinputnotificationbutton").style.display = "block";

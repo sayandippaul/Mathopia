@@ -1,4 +1,6 @@
-var url = "http://localhost:5000";
+// var url = "http://localhost:5000";
+var url="https://mathopia.onrender.com";
+
 function login(){
 
     var sid = document.getElementById("sidlogin").value;
