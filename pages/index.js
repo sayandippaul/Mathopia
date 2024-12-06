@@ -59,7 +59,7 @@ useEffect(() => {
 
 
   window.checkallexamend = () =>{
-    fetch(url+"checkallexamend",{
+    fetch(url+"/checkallexamend",{
       method: 'GET',
       headers: {
         Accept: "application/json",

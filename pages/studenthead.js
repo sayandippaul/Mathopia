@@ -107,7 +107,7 @@ const Studenthead = () => {
     <script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
     <script src="js/main.js"></script>
-    <script type="text/javascript" src="socket.io/socket.io.js"></script>
+    {/* <script type="text/javascript" src="socket.io/socket.io.js"></script> */}
     
     </Head>
     <div
