@@ -3,7 +3,6 @@ import Adminhead from "./adminhead";
 import Adminsidebar from './Adminsidebar';
 import Adminfooter from './adminfooter';
 import Script from 'next/script'
-import { url } from './url.js';
 
 import { useState } from 'react';
 
