@@ -126,6 +126,15 @@ const Studenthead = () => {
                 Math<span className="text-dark">opia</span>{" "}
             </h1>
           </a>
+
+          {/* <button
+              className="btn-search btn btn-primary btn-md-square me-4 rounded-circle "
+              data-toggle="modal"
+              data-target="#notification"
+            >
+              <i className="fas fa-bell" />
+            </button>
+          */}
           <button
             className="navbar-toggler py-2 px-3"
             type="button"
@@ -134,11 +143,16 @@ const Studenthead = () => {
           >
             <span className="fa fa-bars text-primary" />
           </button>
+             
           <div className="collapse navbar-collapse" id="navbarCollapse">
             <div className="navbar-nav mx-auto">
+
             <Link href="/"  className="nav-item nav-link">Home</Link>
-            <Link  href="/studentvideonotes"  className="nav-item nav-link showbutton">Notes/Videos</Link>
+            <a  data-toggle="modal"
+              data-target="#notification"  className="nav-item nav-link ">Notification</a>
+                <Link  href="/studentvideonotes"  className="nav-item nav-link showbutton">Notes/Videos</Link>
             <Link href="/studentallexam"  className="nav-item nav-link showbutton">Exams</Link>
+          
               {/* <a href="about.html" class="nav-item nav-link">About</a> */}
               {/* <a href="service.html" class="nav-item nav-link">Services</a> */}
               {/* <a href="event.html" class="nav-item nav-link">Events</a> */}
@@ -153,16 +167,9 @@ const Studenthead = () => {
               
               {/* <a href="book.html" class="dropdown-item"></a> */}
             </div>
-            <button
-              className="btn-search btn btn-primary btn-md-square me-4 rounded-circle d-none d-lg-inline-flex"
-              data-toggle="modal"
-              data-target="#notification"
-            >
-              <i className="fas fa-bell" />
-            </button>
             
-            <Link href="/studentnewadmission"  className="btn btn-primary py-2 px-4 d-none d-xl-inline-block rounded-pill">New Admission?</Link>
-            <Link  c href="/studentprofile"  className="btn btn-primary py-2 px-4 d-none d-xl-inline-block rounded-pill showbutton">Profile</Link>
+            <Link href="/studentnewadmission"  className="btn btn-primary py-2 px-4  rounded-pill">New Admission?</Link>
+            <Link  c href="/studentprofile"  className="btn btn-primary py-2 px-4  rounded-pill showbutton">Profile</Link>
 
           </div>
         </nav>
