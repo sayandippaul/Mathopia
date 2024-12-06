@@ -4,8 +4,6 @@ import Head from 'next/head';
 import {useEffect, useState,useRef } from 'react';
 
 import io from 'socket.io-client';
-import { set } from 'mongoose';
-import win from 'global';
 var socket = io();
 
 
