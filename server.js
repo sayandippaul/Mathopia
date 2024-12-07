@@ -1858,6 +1858,7 @@ app.post("/sendmailreg", (req, res) => {
       `,</h1>
         <p>Welcome to Mathopia.you have enrolled through this email id.</p>
         <article>Kindly register through your sid and Email to the below given link.</article>
+        https://mathopia-inky.vercel.app
         <div>
             <p><strong>sid</strong>:` +
       req.body.sid +
