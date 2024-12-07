@@ -4,7 +4,7 @@ import Studentfooter from './studentfooter';
 import Script from 'next/script'
 import { useState,useRef } from 'react';
 
-import io from 'socket.io-client';
+import {io} from 'socket.io-client';
 
 
 
@@ -18,14 +18,13 @@ var Studentallexam = () => {
 
   // var url = "http://localhost:5000";
   var url="https://mathopia.onrender.com";
-var socket = io(url);
 
 
 useEffect(() => {
+var socket = io(url);
   if (!hasRun.current) {
     hasRun.current = true;
     socket.on('startexam', (setno) => {
-      // alert("exam starteed"+setno);
       for(var i=0;i<allexams.length;i++){
         if(allexams[i].setno==setno){
           allexams[i].status=2;

@@ -432,11 +432,15 @@ var AllExamsModel = mongoose.model("exams", examSchema);
 
 
 
-const io = require("socket.io")(httpServer);
+const io = require("socket.io")(httpServer,{
+  cors: {
+    origin: "*",
+  }
+});
 
 // var usp = io.of("/user");
 io.on("connection",   (socket) => {
-  console.log("usernew connected ");
+  console.log("usernew why connected ");
   
   socket.on('message', (msg) => {
     console.log('Message received:', msg);
