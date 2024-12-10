@@ -32,6 +32,7 @@ function login(){
           alert("Invalid Credentials");
            }
         else{
+          alert("Welcome "+data[0].name);
           localStorage.setItem("student",JSON.stringify(data[0]));
           window.location.reload();
       

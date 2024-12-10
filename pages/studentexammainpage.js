@@ -4,6 +4,7 @@ import Head from 'next/head';
 import {useEffect, useState,useRef } from 'react';
 
 import io from 'socket.io-client';
+import next from 'next';
 
 
 
@@ -86,57 +87,65 @@ useEffect(() => {
       }
 
             //   function printquestionnumbers() {
-                window.printquestionnumbers = (object) => {
-                    var allquestionnumbers = "";
-                    var allquestionnumbersfield = "";
+    //             window.printquestionnumbers = (object) => {
+    //                 var allquestionnumbers = "";
+    //                 var allquestionnumbersfield = "";
           
-      var temp1="";
-                  for (var i = 1; i <= object.totaltopics.length; i++) {
-                      allquestionnumbersfield = allquestionnumbersfield + `<strong id="showsub` + i + `">` + object.totaltopics[i - 1] + `</strong>
-                          <div id="show`+ i + `">
-                          </div>
-                          `;
+    //   var temp1="";
+    //             //   for (var i = 1; i <= object.totaltopics.length; i++) {
+    //             //       allquestionnumbersfield = allquestionnumbersfield + `<strong id="showsub` + i + `">` + object.totaltopics[i - 1] + `</strong>
+    //             //           <div id="show`+ i + `">
+    //             //           </div>
+    //             //           `;
+    //             //   }
+    //             //   document.getElementById("showleftnumberfield").innerHTML = allquestionnumbersfield;
+    //             //   setTimeout(() => {                 nextprint();
+    //             //   }, 2000);
+    // setTimeout(nextprint(object), 500);
+
+                  
+    //           }
+    
+    
+    
+    window.nextprint=(object)=>{
+      var allquestionnumbersfield = "";
+        for (var it = 1; it <= object.totaltopics.length; it++) {
+        //   console.log(quesgo);
+          var c = 0;var temp1 = "";
+          allquestionnumbersfield = allquestionnumbersfield + `<strong id="showsub` + it + `">` + object.totaltopics[it - 1] + `</strong>
+                <div id="show`+ it + `">`;
+            
+
+          for (var j = 0; j < quesgo.length; j++) {
+
+              console.log(it,object.allquestions[j].qTopic , object.totaltopics[it - 1]);
+              if (object.allquestions[j].qTopic.trim() === object.totaltopics[it - 1].trim()) {
+                console.log("matcj");
+
+                  c++;
+                  var w = parseInt(j + 1);
+                  if (c % 4 == 0) {
+                      temp1 += `<td><button class="but" id="` + w + `" onclick="ge(this)">` + w + '</button></td>' + '<br>';
+
                   }
-                  document.getElementById("showleftnumberfield").innerHTML = allquestionnumbersfield;
-      console.log(allquestionnumbersfield);  
-                //   setTimeout(() => {                 nextprint();
-                //   }, 2000);
-    setTimeout(nextprint(object), 500);
+                  else {
 
-                  
-              }
-              function nextprint(object){
-                  
-                  for (var i = 1; i <= object.totaltopics.length; i++) {
-                    console.log(quesgo);
-                    var c = 0;var temp1 = "";
-                    for (var j = 0; j < quesgo.length; j++) {
-    
-                        // alert(object.allquestions[j].qTopic , object.totaltopics[i - 1]);
-                        if (object.allquestions[j].qTopic == object.totaltopics[i - 1]) {
+                      temp1 += `<td><button class="but" id="` + w + `" onclick="ge(this)">` + w + '</button></td>';
+                  }
 
-                            c++;
-                            var w = parseInt(j + 1);
-                            if (c % 4 == 0) {
-                                temp1 += `<td><button class="but" id="` + w + `" onclick="ge(this)">` + w + '</button></td>' + '<br>';
-    
-                            }
-                            else {
-    
-                                temp1 += `<td><button class="but" id="` + w + `" onclick="ge(this)">` + w + '</button></td>';
-                            }
-    
-    
-                        }
-    
-                    }
-                    document.getElementById("show" + i).innerHTML = temp1 + "<hr>";
-                }
-    
+
               }
-       
-      
-      
+
+          }
+          allquestionnumbersfield =allquestionnumbersfield+ temp1 + "<hr>"+ `</div>`;
+                console.log(allquestionnumbersfield);   
+      }
+
+      document.getElementById("showleftnumberfield").innerHTML = allquestionnumbersfield;
+
+
+    }
       
               
               
@@ -1341,7 +1350,7 @@ fetch(url+"/startexambystudent", {
     // document.getElementById("show3").innerHTML = temp3;
     
     document.getElementById("qno").innerHTML = 1;
-    var no = 1;
+     no = 1;
     var cval;
     
     var time = 10800;
@@ -1375,7 +1384,7 @@ fetch(url+"/startexambystudent", {
     var user = "";
     var ansarr = [];
     
-    var i;
+    // var i;
     
     
     
@@ -1420,16 +1429,21 @@ setquesgo(quesgo);
     totaltopics = object.totaltopics.length;
     settotaltopics(totaltopics);
     printtopics();
+    nextprint(data);
+    // setTimeout(nextprint=(data)=>{}, 500);
+    setTimeout(() => {
+        // console.log("This message is displayed after 2 seconds");
+        nextprint(data);
+    }, 500);
     
-    setTimeout(printquestionnumbers(data), 500);
     
     // printquestionnumbers();
     setTimeout(printoption, 500);
 
     // printoption();
     // printdetails();
-    setTimeout(printdetails, 500);
-    setTimeout(clock, 1000);
+    setTimeout(printdetails, 1000);
+    setTimeout(clock, 2000);
 
 
 
@@ -1806,7 +1820,6 @@ input[type=checkbox]:checked~.sidebarIconToggle>.diagonal.part-2 {
         </div>
       </div>
       <div className="card" style={{ width: "18rem" }}>
-        <img src="" className="card-img-top" alt="..." />
         <div className="card-body">
           <p className="card-text" id="showleftnumberfield">
             {/* <strong id="showsub1">PHYSICS</strong>

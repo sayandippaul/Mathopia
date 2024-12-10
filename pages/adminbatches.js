@@ -422,7 +422,7 @@ var Adminbatches = () => {
                   <div className="form-row col-12">
                     <div className="form-group col-lg-5">
                       <label>Edit Batch Day</label>
-                      <select className="form-control col-12">
+                      <select className="form-control col-12" id="editbatchday">
                         <option selected="">Monday</option>
                         <option>tuesday</option>
                         <option>wednesday</option>
@@ -433,23 +433,23 @@ var Adminbatches = () => {
                       </select>
                     </div>
                     <div className="form-group col-lg-3">
-                      <label htmlFor="inputCity">Edit Starting Time</label>
+                      <label htmlFor="batchstimeInput">Edit Starting Time</label>
                       <input
                         type="time"
                         className="form-control"
-                        id="inputCity"
+                        id="batchstimeInput"
                       />
                     </div>
                     <div className="form-group col-lg-4">
-                      <label htmlFor="inputZip">Edit Ending Time</label>
+                      <label htmlFor="batchetimeInput">Edit Ending Time</label>
                       <input
                         type="time"
                         className="form-control"
-                        id="inputZip"
+                        id="batchetimeInput"
                       />
                     </div>
                   </div>
-                  <button  type="button" className="btn btn-success">
+                  <button onClick={() =>editsavebatch()}  type="button" className="btn btn-success">
                     Save batch
                   </button>
                 </form>
@@ -482,7 +482,7 @@ var Adminbatches = () => {
                     student 3
                   </option>
                 </select>
-                <button className="btn btn-success">Add Now</button>
+                <button onClick={()=> addstudenttobatch()} className="btn btn-success">Add Now</button>
                 <div className="table-responsive mt-4">
                   <h5>View Batch Students</h5>
                   <hr />

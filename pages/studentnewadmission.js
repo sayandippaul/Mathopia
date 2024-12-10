@@ -1,12 +1,49 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Studenthead from "./studenthead";
 import Studentfooter from './studentfooter';
 import Script from 'next/script'
+import { useState,useRef } from 'react';
 
 
 
 
 const Studentnewadmission = () => {
+  function showbuttons(){
+    var showbuttons = document.getElementsByClassName("showbutton");
+    var hidebuttons = document.getElementsByClassName("hidebutton");
+  
+  // alert(localStorage.getItem("student"));
+    // alert(showbuttons.length);
+      if(localStorage.getItem("student")=="null" ||localStorage.getItem("student")==null || localStorage.getItem("student")==undefined){
+        for(var i=0;i<showbuttons.length;i++){
+          showbuttons[i].style.visibility="hidden";
+  
+        }
+        
+        for(var i=0;i<hidebuttons.length;i++){
+          hidebuttons[i].style.visibility="visible";
+  
+        }
+      }
+       else{
+          var showbuttons = document.getElementsByClassName("showbuttons");
+          for(var i=0;i<showbuttons.length;i++){
+              showbuttons[i].style.visibility="visible";
+  
+          }
+          var hidebuttons = document.getElementsByClassName("hidebutton");
+          for(var i=0;i<hidebuttons.length;i++){
+              hidebuttons[i].style.visibility="hidden";
+  
+          }
+      
+       }
+  }
+  
+  useEffect(() => {
+    showbuttons();
+ },[]);
+
   return (
     <>
     <Script src="assetsadmin/js/studentnewadmissionjs.js"></Script>

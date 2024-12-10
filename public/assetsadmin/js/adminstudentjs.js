@@ -92,6 +92,8 @@ var mainallstudents=[];
             });
             var data = await response.json();
             printbatches(data);
+            printallbatches();
+
 
         } catch (error) {
             console.log(error);
@@ -655,12 +657,12 @@ a=a+`<td> `+approvelist[i].phone+`</td>
 </td>
 <td>
     <button type="button" class="btn btn-success  " ><i
-            class="icon-lock"></i>Approve</button>
+         onclick="approve('`+approvelist[i].email+`','`+approvelist[i].name+`','`+approvelist[i].phone+`')"   class="icon-lock"></i>Approve</button>
 
 </td>
 
 <td>
-    <button type="button" class="btn btn-danger " ><i class="icon-lock"></i>
+    <button onclick="reject('`+approvelist[i].email+`','`+approvelist[i].name+`')" type="button" class="btn btn-danger " ><i class="icon-lock"></i>
         Reject</button>
 
 </td></tr>
@@ -688,8 +690,11 @@ else{
 
 
 
-function approve(email){
+function approve(email,name,phone){
+    // alert(email+name+phone);
     // alert(aid);
+   
+
     fetch(url+"/approveadmission", {
         method: "POST",
         headers: {
@@ -699,19 +704,28 @@ function approve(email){
             "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
             "Access-Control-Allow-Origin": "*",
         },
-        body: JSON.stringify({email:email}),
+        body: JSON.stringify({email:email,name:name}),
     })
 
     .then((res) => res.json())
     .then((data) => {
         // alert(data);
-        fetchall();
+
+        // fetchall();
+        toggleDiv('create');
+
+        document.getElementById("scname").value=name;
+        document.getElementById("scphone").value=phone;
+       document.getElementById("scemail").value=email;
+    
+   
+
     })
     .catch((err) => console.log(err));
 }
 
 
-function reject(email){
+function reject(email,name){
     // alert(aid);
     fetch(url+"/rejectadmission", {
         method: "POST",
@@ -722,12 +736,12 @@ function reject(email){
             "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
             "Access-Control-Allow-Origin": "*",
         },
-        body: JSON.stringify({email:email}),
+        body: JSON.stringify({email:email,name:name}),
     })
 
     .then((res) => res.json())
     .then((data) => {
-        // alert(data);
+        alert("Student Rejected for addmission");
         fetchall();
     })
     .catch((err) => console.log(err));
@@ -1297,7 +1311,6 @@ for(var i=0;i<batches.length;i++){
     document.getElementById("showbatchesoption").innerHTML=a;
 
 }
-printallbatches();
 // filter according to batch
 var batchname="All Batches";
 
@@ -1305,14 +1318,14 @@ function filterStudentsByBatch() {
 allstudents=mainallstudents;
 
    var batchId=document.getElementById("batchshow").value;
-   batchname=document.getElementById(batchId).innerHTML;
-   document.getElementById("batchnameshow").innerHTML=batchname;
-console.log(batchId);
+   console.log(batchId);
     if(batchId=="*"){
 allstudents=mainallstudents;
     }
     else{
-
+        batchname=document.getElementById(batchId).innerHTML;
+        document.getElementById("batchnameshow").innerHTML=batchname;
+     
     
         allstudents= allstudents.filter(student => {
         // Check if the student has the provided batch ID in any of their batches

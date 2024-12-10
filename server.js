@@ -723,7 +723,7 @@ app.post("/login", async (req, res) => {
     var data = await Model.find({ sid: req.body.sid });
     // console.log(req.body.username)
     if(data.length==0 || data[0].password!=req.body.password || data[0].approved==0 ||data[0].password==""){
-        res.json(0);
+        res.json({status:0});
     }
     else{
         res.json(data);
@@ -979,7 +979,6 @@ app.post("/Addvideonotes", async (req, res) => {
   app.post("/approveadmission", async (req, res) => {
     try {
       var result = await AdmissionModel.deleteOne({ email: req.body.email });
-    console.log(result);
   
       if (result.deletedCount === 1) {
         console.log("Successfully deleted one document.");
@@ -1001,7 +1000,7 @@ app.post("/Addvideonotes", async (req, res) => {
           <h1>Dear ` +
             req.body.name +
             `,</h1>
-          <p>Your Application to the CPC education is Rejected By the Administration.Though you can kindly contact to the centre .</p>`,
+          <p>Your Application to the CPC education is Approved By the Administration.</p>`,
         };
         transporter.sendMail(mailOptions, function (error, info) {
           if (error) {
@@ -1052,7 +1051,7 @@ app.post("/Addvideonotes", async (req, res) => {
           <h1>Dear ` +
             req.body.name +
             `,</h1>
-          <p>Your Application to the CPC education is Rejected By the Administration.Though you can kindly contact to the centre .</p>`,
+          <p>Your Application to the Mathopia is Rejected By the Administration.Though you can kindly contact to the centre . Thank You.</p>`,
         };
         transporter.sendMail(mailOptions, function (error, info) {
           if (error) {
@@ -1071,12 +1070,78 @@ app.post("/Addvideonotes", async (req, res) => {
     }
   });
   
+  app.post("/editbatch", async (req, res) => {
+    try {
+
+      await CourseModel.updateOne({ bid: req.body.bid }, { $set: { btime: req.body.btime ,  bday: req.body.bday, bname: req.body.bname } });  
+      res.status(200).json({ message: "Batch Edited Successfully" });
+      console.log("Btach Edited Successfully");
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  });
   
 
 
+  app.post("/addstudenttobatch", async (req, res) => {
+    try {
 
+      // await CourseModel.updateOne({ bid: req.body.bid }, { $set: { btime: req.body.btime ,  bday: req.body.bday, bname: req.body.bname } });  
+    var student = await Model.findOne({ sid: req.body.sid });
+    var studenbatch=student.batch;
+    var f=0;
+      for(var i=0;i<student.batch.length;i++){
+        if(student.batch[i]==req.body.bid){
+      res.status(200).json({ message: " Student is Already Present in this Batch" });
+          f=1;
+          break;
+        }
+      }
+      if(f==0){
+        await Model.findByIdAndUpdate(student._id, {
+          $push: { batch: req.body.bid },
+        });
+      res.status(200).json({ message: "Student added Successfully" });
+        
+      }
+      
+      console.log("Student added Successfully");
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  });
+  
 
+  
+  app.post("/removestudentfrombatch", async (req, res) => {
+    try {
 
+      // await CourseModel.updateOne({ bid: req.body.bid }, { $set: { btime: req.body.btime ,  bday: req.body.bday, bname: req.body.bname } });  
+    var student = await Model.findOne({ sid: req.body.sid });
+    // await AllExamsModel.deleteOne({ setno : req.body.setno });
+
+    // var studenbatch=student.batch;
+    // var f=0;
+    //   for(var i=0;i<student.batch.length;i++){
+    //     if(student.batch[i]==req.body.bid){
+    //   res.status(200).json({ message: " Student is Already Present in this Batch" });
+    //       f=1;
+    //       break;
+    //     }
+    //   }
+    // console.log(req.body.sid,req.body.bid);
+        await Model.findByIdAndUpdate(student._id, {
+          $pull: { batch: req.body.bid },
+        });
+      res.status(200).json({ message: "Student Removed from batch Successfully" });
+        
+      
+      console.log("Student deleted Successfully");
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  });
+  
 
 
 
@@ -1656,41 +1721,6 @@ console.log(mydata);
   }
 })
 
-app.post("/updatecourse", async (req, res) => {
-  try {
-    // console.log(req.body.cpcid);
-    var course = await CourseModel.findOne({ courseid: req.body.oldcourseid }, {});
-    // console.log(req.body.username)
-    // console.log(student);
-    if (course == null) {
-      res.json(0);
-    } else {
-      console.log(req.body);
-      var values = Object.keys(req.body);
-      var values1 = Object.values(req.body);
-
-      // if(Object.values(req.body)!=""){
-      // console.log(values);
-      // }
-
-      var mydata = {};
-      for (var i = 0; i < values1.length ; i++) {
-        if (values1[i] != "") {
-          // console.log(values[i]+" "+values1[i]);
-          mydata[values[i]] = values1[i];
-        }
-      }
-
-      console.log(mydata);
-      // console.log(values.batch);
-
-      await CourseModel.findByIdAndUpdate(course._id, mydata);
-      res.json(course);
-    }
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
 app.post("/updatefees", async (req, res) => {
   try {
     // console.log(req.body.cpcid);
@@ -1858,6 +1888,7 @@ app.post("/sendmailreg", (req, res) => {
       `,</h1>
         <p>Welcome to Mathopia.you have enrolled through this email id.</p>
         <article>Kindly register through your sid and Email to the below given link.</article>
+        https://mathopia-inky.vercel.app/
         <div>
             <p><strong>sid</strong>:` +
       req.body.sid +

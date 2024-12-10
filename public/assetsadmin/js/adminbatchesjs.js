@@ -819,8 +819,116 @@ function editbatch(batchId) {
    
 }
 
+function editsavebatch(){
+  var editbid= document.getElementById("batchIdInput").value;
+  var editbname= document.getElementById("batchNameInput").value;
+  var editbday= document.getElementById("editbatchday").value;
+  var editbstime= document.getElementById("batchstimeInput").value;
+  var editbetime= document.getElementById("batchetimeInput").value;
+  var btimeedit="";
+  if(editbetime=="" || editbstime==""){
+    btimeedit=batch.btime;
+  }
+  else{
+    btimeedit=editbstime+"-"+editbetime;
+  }
+  // console.log(editbid+editbname+editbday+editbstime+editbetime);
+  var editbatchobj={
+    bid:editbid,
+    bname:editbname,
+    bday:editbday,
+    btime:btimeedit,
+    
+  }
+  fetch(url+"/editbatch", {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Headers": "Content-Type",
+      "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+      "Access-Control-Allow-Origin": "*",
+    },
+    body: JSON.stringify(editbatchobj),
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      // window.location.replace("login.js");
+      // alert(data);
+            alert("Batch Details Updated");
+            window.location.reload();
+    })
+    .catch((err) => console.log(err));
+
+
+
+
+
+}
+
+
+
+function addstudenttobatch(){
+  var sidtoadd=document.getElementById("selectstudenttoadd").value;
+  if(sidtoadd==0){
+    alert("NO STUDENT SELECTED");
+    return ;
+  }
+  fetch(url+"/addstudenttobatch", {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Headers": "Content-Type",
+      "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+      "Access-Control-Allow-Origin": "*",
+    },
+    body: JSON.stringify({bid:nowbid,sid:sidtoadd}),
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      // window.location.replace("login.js");
+      // alert(data);
+            alert(data.message);
+            window.location.reload();
+    })
+    .catch((err) => console.log(err));
+
+
+
+}
+
+
+
+
+function removestudent(sid){
+  fetch(url+"/removestudentfrombatch", {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Headers": "Content-Type",
+      "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+      "Access-Control-Allow-Origin": "*",
+    },
+    body: JSON.stringify({bid:nowbid,sid:sid}),
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      // window.location.replace("login.js");
+      // alert(data);
+            alert(data.message);
+            window.location.reload();
+    })
+    .catch((err) => console.log(err));
+
+
+}
+
+var nowbid="";
 
 function view(batchId) {
+  nowbid=batchId;
   var myDiv = document.getElementById("viewbatchstudents");
 
   // Focus on the div

@@ -498,7 +498,7 @@ document.getElementById("totaltopics").value=newTopicNumber;
       
       // Print options based on the value of p
       for (var i = 1; i <= p; i++) {
-          correctFieldHTML += '<option> option ' + i + '</option>';
+          correctFieldHTML += '<option value="'+i+'"> option ' + i + '</option>';
       }
       
       correctFieldHTML += '</select>';
@@ -559,7 +559,7 @@ document.getElementById("totaltopics").value=newTopicNumber;
   var inputValues = [];
 
   inputs.forEach(function(input) {
-      inputValues.push(input.value);
+      inputValues.push(input.value.trim());
   });
   examDetails.totaltopics=inputValues;
   console.log(examDetails);
@@ -694,6 +694,8 @@ document.getElementById("selectoptionsetquestion").value=examDetails.edo;
   
   // examDetails.allquestions.push(questionDetails);
       console.log(examDetails); 
+      //do the stuff 
+      uploadfinalquestion();
       addQuestion();
       link="";
       // You can do anything you want with the examDetails object
@@ -927,11 +929,12 @@ if (t === "s") {
   
   // Print options based on the value of p
   for (var i = 1; i <= p; i++) {
+    // make string option 1 to option
       if(selectedQuestion.oc==i){
-          correctFieldHTML += '<option selected> option ' + i + '</option>';
+          correctFieldHTML += '<option value="'+i+'" selected> option ' + i + '</option>';
       }
       else{
-          correctFieldHTML += '<option> option ' + i + '</option>';
+          correctFieldHTML += '<option value="'+i+'"> option ' + i + '</option>';
       }
       // correctFieldHTML += '<option> option ' + i + '</option>';
   }
@@ -997,6 +1000,7 @@ else {
       examDetails.allquestions.splice(questionIndex, 1);
       // addQuestion();
       viewquestionfromloaded(setno);
+      uploadfinalquestion();
       document.getElementById("noofq"+setno).innerHTML=examDetails.allquestions.length;
       
   }
@@ -1039,7 +1043,7 @@ var printpdf="";
                           <!-- <p class="card-text">With supporting text below as a natural lead-in to additional content.</p> -->
                             <a onclick="copycode()" class="btn btn-primary">Copy Question
                             Code</a>
-                            <a onclick="uploadfinalquestion()" id="createpdf" class="btn btn-warning blockedstatus">Upload and Save Final Exam</a>
+                            <!-- <a onclick="uploadfinalquestion()" id="createpdf" class="btn btn-warning blockedstatus">Upload and Save Final Exam</a> -->
                             
                             <div class="blockedstatus btn btn-danger"  id="deleteset"
                             onclick="deleteexamset('`+examDetails.setno+`')"
@@ -1116,7 +1120,7 @@ else if(examDetails.allquestions[i].qType=="s"){
         
         <div class="card form-group col-md-6">
                                                 <div class="card-body">
-                                                <div class="form-group col-md-12 mb-2"><strong>`+parseInt(i+1)+`) </strong>`+c+`(+`+examDetails.allquestions[i].ocm+`,-`+examDetails.allquestions[i].owm+`)</div>
+                                                <div class="form-group col-md-12 mb-2"><strong>`+parseInt(i+1)+`) </strong>`+c+`(+`+examDetails.allquestions[i].ocm+`,-`+examDetails.allquestions[i].owm+`) <strong style="float:right">`+examDetails.allquestions[i].qTopic+`</strong></div>
                                            
                                                 <div class="card form-group col-md-12" style="height: 200px;overflow-y: scroll;">
             
@@ -1199,9 +1203,6 @@ window.scrollTo({
 
 // function uploadfinalquestion(){
   window.uploadfinalquestion=()=>{
-    if( !confirm("Are You Sure To Publish The Exam?")){
-        return;
-    }
     // if there are any no value field in examDetails then fill with #
     for (var i = 0; i < examDetails.allquestions.length; i++) {
         for (var j = 1; j <= examDetails.allquestions[i].optionSet; j++) {
@@ -1324,7 +1325,9 @@ window.scrollTo({
     .then(response => response.json())
     .then(data => {
 
-        alert("Exam set uploaded Successfully,Now Publish the Exam to show to the students");
+        alert("Question uploaded Successfully.");
+printallbatches(allexams);
+
         // viewquestion(examDetails);
         // document.getElementById("qidcreate").value="q1";
     })
