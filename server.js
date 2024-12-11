@@ -2146,7 +2146,8 @@ app.post("/saveoption", async (req, res) => {
       if(student.exams[i].setno == req.body.setno){
         var examDetails=student.exams[i];
         examDetails.ansarr = req.body.ansarr;
-        await Model.updateOne({exams:{$elemMatch:{setno:req.body.setno}}},{$set:{"exams.$.ansarr":req.body.ansarr,"exams.$.issub":req.body.issub}});
+        await Model.updateOne({sid:req.body.sid,exams:{$elemMatch:{setno:req.body.setno}}},{$set:{"exams.$.ansarr":req.body.ansarr,"exams.$.issub":req.body.issub}});
+        // await Model.updateOne({exams:{$elemMatch:{setno:req.body.setno}}},{$set:{"exams.$.ansarr":req.body.ansarr,"exams.$.issub":req.body.issub}});
         res.status(200).json(examDetails.ansarr);
         return;
       }
