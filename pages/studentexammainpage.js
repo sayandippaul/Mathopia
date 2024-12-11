@@ -46,7 +46,7 @@ useEffect(() => {
 
       
 
-function caltime(startDay, startTime, durationMinutes) {
+function calctime(startDay, startTime, durationMinutes) {
     // Parse start day and time
     // alert(startDay);
     // alert(startTime);
@@ -118,7 +118,7 @@ function caltime(startDay, startTime, durationMinutes) {
               var date=data[i].date;
               var duration=data[i].time;
               // console.log(starttime,date,duration);
-              if(caltime(date,starttime,duration)<=0){
+              if(calctime(date,starttime,duration)<=0){
                 setendstatus(data[i].setno); 
               }
             }
