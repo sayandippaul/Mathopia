@@ -9,6 +9,7 @@ import { useState, useEffect,useRef } from 'react';
  
 // // });
 import io from 'socket.io-client';
+import { get } from 'http';
 // socket.emit('message', "message");
 
 
@@ -81,6 +82,56 @@ document.getElementById("showdetailsupload").innerHTML=`
 
 
 
+function caltime(startDay, startTime, durationMinutes) {
+  // Parse start day and time
+  // alert(startDay);
+  // alert(startTime);
+  // alert(durationMinutes);
+  const [startYear, startMonth, startDate] = startDay.split('-').map(Number);
+  const [startHour, startMinute] = startTime.split(':').map(Number);
+  
+  // Create a Date object for the start date and time
+  const startDateTime = new Date(startYear, startMonth - 1, startDate, startHour, startMinute);
+  console.log(startDateTime);
+
+  // Add the duration to the start date and time
+  const adjustedTime = new Date(startDateTime.getTime() + durationMinutes * 60000);
+
+  // Get the current time
+  const now = new Date();
+
+  // Compare times
+  // console.log(adjustedTime- now);
+  if (adjustedTime <= now) {
+      return 0; // If adjusted time is less than or equal to now, return 0
+  }
+
+  // Calculate the difference in seconds
+  const differenceInSeconds = Math.floor((adjustedTime - now) / 1000);
+  return differenceInSeconds;
+}
+
+function setendstatus(setno){
+  fetch(url+"/setendstatus", {
+    method: 'POST',
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Headers": "Content-Type",
+      "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+      "Access-Control-Allow-Origin": "*",
+    },
+    body: JSON.stringify({setno:setno}),
+  })
+  .then(response => response.json())
+  .then(data => {
+  }
+  )
+  .catch((error) => {
+
+  });
+}
+
 
 
     window.checkallexamend = () =>{
@@ -96,6 +147,18 @@ document.getElementById("showdetailsupload").innerHTML=`
         })
         .then(response => response.json())
         .then(data => {
+          // console.log(data);
+          for(var i=0;i<data.length;i++){
+            // console.log(data[i]);
+            var starttime=data[i].startingTime;
+            var date=data[i].date;
+            var duration=data[i].time;
+            // console.log(starttime,date,duration);
+            if(caltime(date,starttime,duration)<=0){
+              setendstatus(data[i].setno); 
+            }
+          }
+          
         })
         .catch((error) => {
             console.error('Error:', error);
@@ -1857,6 +1920,55 @@ window.extractIdFromLink =(link) =>{
         console.error('Error:', error);
     });
 }  
+function getCurrentTime() {
+  const now = new Date();
+  const hours = now.getHours().toString().padStart(2, '0'); // Ensures 2-digit format
+  const minutes = now.getMinutes().toString().padStart(2, '0'); // Ensures 2-digit format
+  return `${hours}:${minutes}`;
+//   const nowUTC = new Date();
+//   const offsetIST = 5.5 * 60 * 60 * 1000; // IST offset in milliseconds
+//   const nowIST = new Date(nowUTC.getTime() + offsetIST);
+
+//   // Format the time as HH-MM in 24-hour format
+//   const hours = nowIST.getHours().toString().padStart(2, '0');
+//   const minutes = nowIST.getMinutes().toString().padStart(2, '0');
+// if(minutes<10){
+//   minutes = "0"+minutes;
+// }
+// if(hours<10){
+//   hours = "0"+hours;
+// }
+//   return `${hours}:${minutes}`;
+}
+function gettoday(){
+  var d = new Date();
+  var date = d.getDate();
+  var month = d.getMonth() + 1; // Since getMonth() returns month from 0-11 not 1-12
+  var year = d.getFullYear();
+  if(date<10){
+    date = "0"+date;
+  }
+  if(month<10){
+    month = "0"+month;
+  }
+  return year + "-" + month + "-" + date;
+  // const nowUTC = new Date();
+  //   const offsetIST = 5.5 * 60 * 60 * 1000; // IST offset in milliseconds
+  //   const nowIST = new Date(nowUTC.getTime() + offsetIST);
+
+  //   // Format the date as YYYY-MM-DD
+  //   const year = nowIST.getFullYear();
+  //   const month = (nowIST.getMonth() + 1).toString().padStart(2, '0'); // Months are 0-indexed
+  //   const date = nowIST.getDate().toString().padStart(2, '0');
+  //   if(date<10){
+  //   date = "0"+date;
+  // }
+  // if(month<10){
+  //   month = "0"+month;
+  // }
+
+  //   return `${year}-${month}-${date}`;
+}
 
 window.startexam =(setno,totalno) =>{
     if( !confirm("Are You Sure To Start The Exam?")){
@@ -1871,7 +1983,7 @@ window.startexam =(setno,totalno) =>{
           "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
           "Access-Control-Allow-Origin": "*",
         },
-        body: JSON.stringify({setno:setno,totalno:totalno}),
+        body: JSON.stringify({setno:setno,totalno:totalno,time:getCurrentTime(),date:gettoday()}),
     })
     .then(response => response.json())
     .then(data => {

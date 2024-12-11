@@ -44,6 +44,60 @@ useEffect(() => {
       }
 
 
+      
+
+function caltime(startDay, startTime, durationMinutes) {
+    // Parse start day and time
+    // alert(startDay);
+    // alert(startTime);
+    // alert(durationMinutes);
+    const [startYear, startMonth, startDate] = startDay.split('-').map(Number);
+    const [startHour, startMinute] = startTime.split(':').map(Number);
+    
+    // Create a Date object for the start date and time
+    const startDateTime = new Date(startYear, startMonth - 1, startDate, startHour, startMinute);
+    console.log(startDateTime);
+  
+    // Add the duration to the start date and time
+    const adjustedTime = new Date(startDateTime.getTime() + durationMinutes * 60000);
+  
+    // Get the current time
+    const now = new Date();
+  
+    // Compare times
+    // console.log(adjustedTime- now);
+    if (adjustedTime <= now) {
+        return 0; // If adjusted time is less than or equal to now, return 0
+    }
+  
+    // Calculate the difference in seconds
+    const differenceInSeconds = Math.floor((adjustedTime - now) / 1000);
+    return differenceInSeconds;
+  }
+  
+  function setendstatus(setno){
+    fetch(url+"/setendstatus", {
+      method: 'POST',
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Headers": "Content-Type",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify({setno:setno}),
+    })
+    .then(response => response.json())
+    .then(data => {
+    }
+    )
+    .catch((error) => {
+  
+    });
+  }
+  
+  
+  
       window.checkallexamend = () =>{
         fetch(url+"/checkallexamend",{
           method: 'GET',
@@ -57,13 +111,26 @@ useEffect(() => {
           })
           .then(response => response.json())
           .then(data => {
+            // console.log(data);
+            for(var i=0;i<data.length;i++){
+              // console.log(data[i]);
+              var starttime=data[i].startingTime;
+              var date=data[i].date;
+              var duration=data[i].time;
+              // console.log(starttime,date,duration);
+              if(caltime(date,starttime,duration)<=0){
+                setendstatus(data[i].setno); 
+              }
+            }
+            
           })
           .catch((error) => {
               console.error('Error:', error);
           });
       
             }
-            window.checkallexamend();
+            checkallexamend();
+  
     
   setno = localStorage.getItem("examsetno");
   setsetno(setno);
@@ -386,6 +453,7 @@ fetch(url+"/startexambystudent", {
                 var adjustedTime = new Date(startDateTime.getTime() + durationMinutes * 60000);
             
                 // Get the current time
+
                 var now = new Date();
             
                 // Compare times

@@ -1996,31 +1996,12 @@ app.post("/publishexam", async (req, res) => {
 );
 
 
-function getCurrentTime() {
-  const now = new Date();
-  const hours = now.getHours().toString().padStart(2, '0'); // Ensures 2-digit format
-  const minutes = now.getMinutes().toString().padStart(2, '0'); // Ensures 2-digit format
-  return `${hours}:${minutes}`;
-}
-function gettoday(){
-  var d = new Date();
-  var date = d.getDate();
-  var month = d.getMonth() + 1; // Since getMonth() returns month from 0-11 not 1-12
-  var year = d.getFullYear();
-  if(date<10){
-    date = "0"+date;
-  }
-  if(month<10){
-    month = "0"+month;
-  }
-  return year + "-" + month + "-" + date;
-}
 app.post("/startexam", async (req, res) => {
   try {
-
-    await AllExamsModel.updateOne({ setno: req.body.setno }, { $set: { status: 2 , startingTime: getCurrentTime(),date: gettoday(),totalno:req.body.totalno } });  
-    res.status(200).json({ message: "Exam Published Successfully" });
-    console.log("Exam Published Successfully");
+    console.log(req.body)
+    await AllExamsModel.updateOne({ setno: req.body.setno }, { $set: { status: 2 , startingTime: req.body.time,date: req.body.date,totalno:req.body.totalno } });  
+    res.status(200).json({ message: "Exam Started Successfully" });
+    console.log("Exam Started Successfully");
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -2072,32 +2053,20 @@ app.post("/deleteexamset", async (req, res) => {
 }
 );
 
-function caltime(startDay, startTime, durationMinutes) {
-  // Parse start day and time
-  // alert(startDay);
-  // alert(startTime);
-  // alert(durationMinutes);
-  const [startYear, startMonth, startDate] = startDay.split('-').map(Number);
-  const [startHour, startMinute] = startTime.split(':').map(Number);
-  
-  // Create a Date object for the start date and time
-  const startDateTime = new Date(startYear, startMonth - 1, startDate, startHour, startMinute);
 
-  // Add the duration to the start date and time
-  const adjustedTime = new Date(startDateTime.getTime() + durationMinutes * 60000);
 
-  // Get the current time
-  const now = new Date();
-
-  // Compare times
-  if (adjustedTime <= now) {
-      return 0; // If adjusted time is less than or equal to now, return 0
+app.post("/setendstatus", async (req, res) => {
+  try {
+    // var exam = await AllExamsModel.findOne({ setno: req.body.setno });
+    // console.log(exam);
+              await AllExamsModel.updateOne({ setno: req.body.setno }, { $set: { status: 3} }); 
+    // console.log("exam ended"+req.body.setno);
+    res.json("done setatus 3");
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
-
-  // Calculate the difference in seconds
-  const differenceInSeconds = Math.floor((adjustedTime - now) / 1000);
-  return differenceInSeconds;
 }
+);
 
 
 app.get("/checkallexamend", async (req, res) => {
@@ -2105,16 +2074,6 @@ app.get("/checkallexamend", async (req, res) => {
   try {
     var data = await AllExamsModel.find({ status: 2 });
     console.log(data.length);
-    for(var i=0;i<data.length;i++){
-      // console.log(data[i]);
-      var starttime=data[i].startingTime;
-      var date=data[i].date;
-      var duration=data[i].time;
-      // console.log(starttime,date,duration);
-      if(caltime(date,starttime,duration)<=0){
-        await AllExamsModel.updateOne({ setno: data[i].setno }, { $set: { status: 3} });  
-      }
-    }
     res.json(data);
 
   } catch (error) {
