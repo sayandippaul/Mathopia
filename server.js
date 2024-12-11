@@ -2108,9 +2108,9 @@ app.post("/startexambystudent", async (req, res) => {
     // var examDetails = req.body.examDetails;
     // push ansarr into examdetails
     // examDetails.ansarr = req.body.ansarr;
-    var details={setno:req.body.setno,ansarr:req.body.ansarr};
+    var details={setno:req.body.setno,ansarr:req.body.ansarr,issub:"0"};
     await Model.updateOne({ sid: req.body.sid }, { $push: { exams: details } });  
-    res.status(200).json({ansarr:req.body.ansarr,issub:0});
+    res.status(200).json({ansarr:req.body.ansarr,issub:"0"});
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

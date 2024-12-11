@@ -382,7 +382,7 @@ fetch(url+"/startexambystudent", {
 
     ansarr = data.ansarr;
     console.log(ansarr);
-    if(data.issub==1){
+    if(data.issub=="1" || data.issub==1){
         alert("You have already submitted the exam");
         window.location.href = "/studentallexam";
     }
