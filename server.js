@@ -36,6 +36,28 @@ database.on("error", (error) => {
 database.once("connected", () => {
   console.log("Database Connected");
 });
+
+
+
+var ansarrmodel = new mongoose.Schema({
+  qno: {
+    required: false,
+    type: Number,
+  },
+  ans: {
+    required: false,
+    type: String,
+  },
+  att: {
+    required: false,
+    type: Number,
+  },
+  mark: {
+    required: false,
+    type: Number,
+  }
+});
+
 var allanswers = new mongoose.Schema({
   setno: {
     required: false,
@@ -47,9 +69,8 @@ var allanswers = new mongoose.Schema({
   },
   ansarr: {
     required: false,
-    type: Array,
-  },
-  
+    type: [ansarrmodel],
+  }
 }); 
 
 // var batches = new mongoose.Schema({
