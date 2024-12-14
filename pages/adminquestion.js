@@ -1205,7 +1205,7 @@ else if(examDetails.allquestions[i].qType=="s"){
 
                                                 </div>
                                                
-                                                <h6 class="form-group col-md-12 m-2"><strong>Question Text:</strong> <pre style="color:white">`+examDetails.allquestions[i].qtext+`</pre></h6>
+                                                <h6 class="form-group col-md-12 m-2"><strong>Question Text:</strong> <pre  style="color:white;white-space: pre-wrap; word-wrap: break-word;" >`+examDetails.allquestions[i].qtext+`</pre></h6>
                                                 `+b+`
                                                   <div class="form-group col-md-12 mb-2"><strong>Correct Answer:</strong> `+examDetails.allquestions[i].oc+`</div> 
                                                   <a class="blockedstatus form-group col-md-4 m-2 btn btn-light" href="#profile" onclick="editquestion('`+examDetails.allquestions[i].qid+`')">Edit Quesion</a>  
