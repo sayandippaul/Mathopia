@@ -763,8 +763,8 @@ document.getElementById("selectoptionsetquestion").value=examDetails.edo;
       console.log(examDetails); 
       //do the stuff 
       uploadfinalquestion();
-      addQuestion();
       link="";
+      addQuestion();
       // You can do anything you want with the examDetails object
   // Now you can perform any further actions, like sending the data to a server or processing it further.
 }
@@ -860,6 +860,9 @@ document.getElementById("owm").value=examDetails.edwm;
 document.getElementById("questiontype").value=examDetails.edq;
 document.getElementById("selectoptionsetquestion").value=examDetails.edo;
 
+document.getElementById("showeditimg").innerHTML=`
+                            <iframe style={{"height":"200px"}}  src="https://drive.google.com/file/d/`+link+`/preview"  class="img-fluid w-100 "    allow="autoplay" allowfullscreen></iframe>
+ `;
 
 
                                               var subtopics = examDetails.totaltopics;
@@ -896,6 +899,7 @@ document.getElementById("qimg").value="";
   previoustopic = questionTopic;
   var optionSet = document.getElementById("selectoptionsetquestion").value;
   var uploadimageurl="";
+
   if(link!="")
     uploadimageurl=extractIdFromLink(link);  
   // Add question details to the questionObject
@@ -983,6 +987,7 @@ if (selectedQuestion) {
 
   // bidisha 
   printOptions(selectedQuestion.optionSet);
+  link=`https://drive.google.com/file/d/`+selectedQuestion.qimg+`/preview`;
   
   // printCorrectField(selectedQuestion.qType, selectedQuestion.optionSet);    
   for (var i = 1; i <= selectedQuestion.optionSet; i++) {
