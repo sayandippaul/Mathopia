@@ -485,12 +485,12 @@ gotmarks=gotmarks+parseInt(m);
 
 
 
-                    a = a + `<div class="col-md-6 col-lg-6">
-                            <div class="d-inline-flex w-100 border border-primary p-4 col-lg-12 rounded mb-4">
+                    a = a + `<div  class="col-md-6 col-lg-6">
+                            <div  style="overflow-x:scroll" class="d-inline-flex w-100 border border-primary p-4 col-lg-12 rounded mb-4">
                                 <div class="">
                         <small class="d-inline-block fw-bold text-dark text-uppercase bg-light border border-primary rounded-pill px-4 py-1 mb-3">`+d+` (+`+question.allquestions[i].ocm+`,-`+question.allquestions[i].owm+`)</small>
 `+e+`
-                                    <h4>`+(i+1)+` ) `+question.allquestions[i].qtext+`</h4>
+                                    <pre>`+(i+1)+` ) `+question.allquestions[i].qtext+`</pre>
                                     <div class="col-lg-12 wow bounceInUp" data-wow-delay="0.1s">
                                     <iframe style="height:150px"  src="https://drive.google.com/file/d/`+question.allquestions[i].qimg+`/preview" class="img-fluid rounded my-2 w-100 "    allow="autoplay" allowfullscreen></iframe>
 

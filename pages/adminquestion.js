@@ -10,6 +10,7 @@ import { useState, useEffect,useRef } from 'react';
 // // });
 import io from 'socket.io-client';
 import { get } from 'http';
+import { set } from 'mongoose';
 // socket.emit('message', "message");
 
 
@@ -24,6 +25,7 @@ var Adminquestion = () => {
   var [selectedBatches,setselectedBatches]=useState([]);
   var [examDetails,setexamDetails]=useState([]);
   var [link,setlink]=useState("");
+  var [previoustopic,setprevioustopic]=useState("");
   link="";
   var hasRun = useRef(false);
 
@@ -36,6 +38,8 @@ var socket = io(url);
 useEffect(() => {
   if (!hasRun.current) {
     hasRun.current = true;
+  setprevioustopic("");
+
 
 
 
@@ -836,6 +840,7 @@ document.getElementById('viewbutton').classList.remove('active');
 
 
   var inputs = document.querySelectorAll('#showquestionpanel input[type="text"]');
+  document.getElementById("qcreatetext").value="";
   inputs.forEach(function(input) {
       input.value = "";
   });
@@ -868,6 +873,9 @@ document.getElementById("selectoptionsetquestion").value=examDetails.edo;
                                                   option.text = subtopics[i];
                                                   selectElement.add(option);
                                               }
+                                              if(previoustopic!=""){
+                                                  document.getElementById("printquestiontopic").value=previoustopic;
+                                              }
 link="";
 document.getElementById("qimg").value="";
 }
@@ -885,6 +893,7 @@ document.getElementById("qimg").value="";
   
   var questionType = document.getElementById("questiontype").value;
   var questionTopic = document.getElementById("printquestiontopic").value;
+  previoustopic = questionTopic;
   var optionSet = document.getElementById("selectoptionsetquestion").value;
   var uploadimageurl="";
   if(link!="")
@@ -1191,7 +1200,7 @@ else if(examDetails.allquestions[i].qType=="s"){
 
                                                 </div>
                                                
-                                                <h6 class="form-group col-md-12 m-2"><strong>Question Text:</strong> `+examDetails.allquestions[i].qtext+`</h6>
+                                                <h6 class="form-group col-md-12 m-2"><strong>Question Text:</strong> <pre style="color:white">`+examDetails.allquestions[i].qtext+`</pre></h6>
                                                 `+b+`
                                                   <div class="form-group col-md-12 mb-2"><strong>Correct Answer:</strong> `+examDetails.allquestions[i].oc+`</div> 
                                                   <a class="blockedstatus form-group col-md-4 m-2 btn btn-light" href="#profile" onclick="editquestion('`+examDetails.allquestions[i].qid+`')">Edit Quesion</a>  
@@ -3376,7 +3385,7 @@ value="3"
                             </div>
                             <div className="form-group col-md-6">
                               <label htmlFor="inputEmail4">
-                                Negative Marks(for wrong)
+                                Negative Marks(Don't give - ,only put number)
                               </label>
                               <input
                                 type="number"
@@ -3387,12 +3396,13 @@ value="3"
                             </div>
                             <div className="form-group col-12">
                               <label htmlFor="topic1"> question Text</label>
-                              <input
+                              <textarea
                                 type="text"
+                                style={{"white-space": "pre-wrap"}}
                                 className="form-control"
                                 id="qcreatetext"
                                 placeholder="Enter Question body text here"
-                              />
+                              ></textarea>
                             </div>
                             <div className="form-group col-6">
                               <label htmlFor="topic1"> question Image</label>

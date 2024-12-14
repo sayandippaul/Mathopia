@@ -461,7 +461,7 @@ const io = require("socket.io")(httpServer,{
 
 // var usp = io.of("/user");
 io.on("connection",   (socket) => {
-  console.log("usernew why connected ");
+  // console.log("usernew why connected ");
   
   socket.on('message', (msg) => {
     console.log('Message received:', msg);

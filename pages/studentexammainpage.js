@@ -881,7 +881,7 @@ fetch(url+"/startexambystudent", {
 
         
                 document.getElementById("qno").innerHTML = parseInt(object.allquestions[i - 1].qid.slice(1));
-                document.getElementById("qshow").innerHTML = object.allquestions[i - 1].qtext;
+                document.getElementById("qshow").innerHTML ="<pre>"+ object.allquestions[i - 1].qtext +"</pre>";
                 document.getElementById("qimgshow").innerHTML=`<iframe style="width:100%;height:400px"   src="https://drive.google.com/file/d/`+object.allquestions[i - 1].qimg+`/preview"     allow="autoplay" allowfullscreen></iframe>`;
 
                 
