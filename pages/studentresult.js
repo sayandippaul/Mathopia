@@ -11,7 +11,7 @@ const Studentresult = () => {
     <>
     <Script src="assetsadmin/js/studentresultjs.js"></Script>
     <Studenthead></Studenthead>
-    
+   
     <>
   <div
     className="container-fluid contact py-3 wow bounceInUp"
@@ -67,26 +67,57 @@ const Studentresult = () => {
           <div className="col-md-6 col-lg-5">
             <div>
               <div className="d-inline-flex w-100 border border-primary p-4 rounded mb-4">
-                <i className="fas fa-map-marker-alt fa-2x text-primary me-4" />
+                <i className="fa fa-th fa-2x text-primary me-4" />
                 <div className="">
                   <h4 id="showmarks">23/40</h4>
                   <p id="showfullmarks">Full Marks:40</p>
                 </div>
               </div>
               <div className="d-inline-flex w-100 border border-primary p-4 rounded mb-4">
-                <i className="fas fa-envelope fa-2x text-primary me-4" />
+                <i className="fa fa-check fa-2x text-primary me-4" />
                 <div className="">
                   <h4 id="correct">Correct Attempts:4</h4>
                 </div>
               </div>
               <div className="d-inline-flex w-100 border border-primary p-4 rounded">
-                <i className="fa fa-phone-alt fa-2x text-primary me-4" />
+                <i className="fa fa-times fa-2x text-primary me-4" />
                 <div className="">
                   <h4 id="wrong">Wrong Attempts:3</h4>
                 </div>
               </div>
             </div>
           </div>
+
+
+{/* 
+          <div className="d-inline-flex w-100 border border-primary p-4 rounded">
+    <small class="d-inline-block fw-bold text-dark text-uppercase bg-light border border-primary rounded-pill px-4 py-1 mb-3"><strong><i class="fa fa-square"></i> </strong><span >Topic Name</span></small>
+    <small class="d-inline-block fw-bold text-dark text-uppercase bg-light border border-primary rounded-pill px-4 py-1 mb-3"><strong><i class="fa fa-check"></i> Attempted : </strong><span >correct</span></small>               
+    <small class="d-inline-block fw-bold text-dark text-uppercase bg-light border border-primary rounded-pill px-4 py-1 mb-3"><strong><i class="fa fa-times"></i> Attempted : </strong><span >wrong</span></small>               
+    <small class="d-inline-block fw-bold text-dark text-uppercase bg-light border border-primary rounded-pill px-4 py-1 mb-3"><strong><i class="fa fa-circle"></i> Attempted : </strong><span >Not</span></small>               
+    <small class="d-inline-block fw-bold text-dark text-uppercase bg-light border border-primary rounded-pill px-4 py-1 mb-3"><strong> <i class="fa fa-square"></i> Total Marks : </strong><span >Total</span></small>
+    <small class="d-inline-block fw-bold text-dark text-uppercase bg-light border border-primary rounded-pill px-4 py-1 mb-3"><strong><i class="fa fa-check"></i> Marks  : </strong><span >Correct</span></small>
+    <small class="d-inline-block fw-bold text-dark text-uppercase bg-light border border-primary rounded-pill px-4 py-1 mb-3"><strong><i class="fa fa-times"></i> Marks  : </strong><span >Wrong</span></small>
+    </div> */}
+
+    <div id="showtablestat">
+
+    
+
+
+    </div> 
+
+
+
+    {/* <canvus id="piestat"></canvus>      */}
+<h3>Marks Distribution</h3>
+   <canvas id="piestat"  style={{width:1000,height:500}} ></canvas>
+   <h3> Attempts Statistics</h3>
+   <div id="barstat" ></div>     
+   {/* <div id="barstat"></div>      */}
+
+
+           
         </div>
       </div>
     </div>

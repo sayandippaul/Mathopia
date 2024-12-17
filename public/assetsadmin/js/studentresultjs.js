@@ -146,6 +146,8 @@
     //     edq: "d",
     //     edwm: "7"
     // }'
+
+
 //   var url = "http://localhost:5000";
 var url="https://mathopia.onrender.com";
 
@@ -153,6 +155,7 @@ var url="https://mathopia.onrender.com";
     var student={};
     var question={};
     var anarrgiven=[];
+    var alldetailsforbar=[];
 
     function setquestion(p) {
         question = p;
@@ -185,6 +188,7 @@ function fetchstudent(studentid){
         
     showbasicresult();
     document.getElementById("result").style.display = "none";
+    showbargraphforall(question,student);
 
 
     return data;
@@ -235,7 +239,6 @@ function fetchquestion(setno){
     //    student=fetchstudent(student.sid);
     
      
-
 
 
     }
@@ -488,6 +491,8 @@ gotmarks=gotmarks+parseInt(m);
                     a = a + `<div  class="col-md-6 col-lg-6">
                             <div  style="overflow-x:scroll" class="d-inline-flex w-100 border border-primary p-4 col-lg-12 rounded mb-4">
                                 <div class="">
+                        <small class="d-inline-block fw-bold text-dark text-uppercase bg-light border border-primary rounded-pill px-4 py-1 mb-3"><span>`+question.allquestions[i].qTopic+`</span></small>
+
                         <small class="d-inline-block fw-bold text-dark text-uppercase bg-light border border-primary rounded-pill px-4 py-1 mb-3">`+d+` (+`+question.allquestions[i].ocm+`,-`+question.allquestions[i].owm+`)</small>
 `+e+`
                                     <pre  style="white-space: pre-wrap; word-wrap: break-word;">`+(i+1)+` ) `+question.allquestions[i].qtext+`</pre>
@@ -532,3 +537,299 @@ gotmarks=gotmarks+parseInt(m);
     }
    
 
+
+
+
+function createCanvas(i) {
+        var container = document.getElementById("barstat");
+
+        // Create a canvas element
+        var canvas = document.createElement('canvas');
+        canvas.className = "sbar";
+        canvas.id = "barstat"+i;
+        // canvas.width = 80;
+        // canvas.height = 80;
+        // document.getElementById("barstat"+i).style.width="500px";
+        // document.getElementById("barstat"+i).style.height="500px";\
+        canvas.width = window.innerWidth / 3;  // Adjust the width (1/3 of the window width in this case)
+        canvas.height = window.innerHeight / 4;
+
+        // Append the canvas to the container
+        container.appendChild(canvas);
+
+        return canvas;
+}    
+
+
+
+function makebargraphobjects(question,student){
+    console.log(question);
+    // create a array of object where object will contain totaltopc[i] and marks scored in that topic and attempted to that topic and create correct marks total marks wrong marks correct marks correct attempted wrong attempted not attempted
+    var totaltopics=question.totaltopics;
+    var totalmarks=0;
+    var totalcorrect=0;
+    var totalwrong=0;
+    var gotmarks=0;
+    var totalcorrectattempted=0;
+    var totalwrongattempted=0;
+    var notattempted=0;
+    var alldetailsforbar=[];
+    for(var i=0;i<totaltopics.length;i++){
+        for(var j=0;j<question.allquestions.length;j++){
+            if(question.allquestions[j].qTopic==totaltopics[i]){
+                totalmarks=totalmarks+parseInt(question.allquestions[j].ocm);
+                for(var k=0;k<anarrgiven.length;k++){
+                    if(question.allquestions[j].qid=="q"+anarrgiven[k].qno){
+                        if(question.allquestions[j].qType=="s"){
+                            if(anarrgiven[k].ans==""){
+                                notattempted++;
+                            }
+                            else if(question.allquestions[j].oc==anarrgiven[k].ans){
+                                totalcorrect++;
+                                gotmarks=gotmarks+parseInt(question.allquestions[j].ocm);
+                                totalcorrectattempted++;
+                            }
+                            else{
+                                totalwrong++;
+                                gotmarks=gotmarks-parseInt(question.allquestions[j].owm);
+                                totalwrongattempted++;
+                            }
+                        }
+                        else if(question.allquestions[j].qType=="d"){
+                            var count=0;
+                            for(var l=0;l<anarrgiven[k].ans.length;l++){
+                                if(question.allquestions[j].oc.includes(anarrgiven[k].ans[l])){
+                                    count++;
+                                }
+                                else{
+                                    count=0;
+                                    break;
+                                }
+                            }
+                            if(count==0){
+                                totalwrong++;
+                                gotmarks=gotmarks-parseInt(question.allquestions[j].owm);
+                                totalwrongattempted++;
+                            }
+                            else if(count==question.allquestions[j].oc.length){
+                                totalcorrect++;
+                                gotmarks=gotmarks+parseInt(question.allquestions[j].ocm);
+                                totalcorrectattempted++;
+                            }
+                            else{
+                                var m=question.allquestions[j].ocm*count/question.allquestions[j].oc.length;
+                                gotmarks=gotmarks+parseInt(m);
+                                totalcorrect++;
+                                totalcorrectattempted++;
+                            }
+                        }
+                        else if(question.allquestions[j].qType=="n"){
+                            if(anarrgiven[k].ans==""){
+                                notattempted++;
+                            }
+                            else if(question.allquestions[j].oc==anarrgiven[k].ans){
+                                totalcorrect++;
+                                gotmarks=gotmarks+parseInt(question.allquestions[j].ocm);
+                                totalcorrectattempted++;
+                            }
+                            else{
+                                totalwrong++;
+                                gotmarks=gotmarks-parseInt(question.allquestions[j].owm);
+                                totalwrongattempted++;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        alldetailsforbar.push({topic:totaltopics[i],totalmarks:totalmarks,correct:totalcorrect,wrong:totalwrong,gotmarks:gotmarks,correctattempted:totalcorrectattempted,wrongattempted:totalwrongattempted,notattempted:notattempted});
+        totalmarks=0;
+        totalcorrect=0;
+        totalwrong=0;
+        gotmarks=0;
+
+        totalcorrectattempted=0;
+        totalwrongattempted=0;
+        notattempted=0;
+
+    }
+
+    return alldetailsforbar;
+
+}
+function showbargraphforall(q,s){
+    var alldetailsforbar=makebargraphobjects(q,s);
+    var yValues = [];
+    var piexValues = [];
+    var pieyValues = [];
+    var canvus;
+    var l=``;
+    for(var i=0;i<alldetailsforbar.length;i++){
+        // xValues.push(alldetailsforbar[i].topic);
+        yValues=[];
+        piexValues.push(alldetailsforbar[i].topic);
+        pieyValues.push(alldetailsforbar[i].gotmarks);
+        yValues.push(alldetailsforbar[i].correctattempted);
+        yValues.push(alldetailsforbar[i].wrongattempted);
+        yValues.push(alldetailsforbar[i].notattempted);
+         canvas = createCanvas(i);
+
+        showbargraph(canvas,yValues,alldetailsforbar[i].topic);
+        sethw();                                                                                    
+        l=l+`<div class=" border border-primary mb-2 py-2 px-1"><div className="d-inline-flex w-100 border border-primary p-4 rounded">
+        <h3 class="mx-2">`+alldetailsforbar[i].topic+`</h3>
+    <small class="d-inline-block fw-bold text-light text-uppercase bg-success border border-primary rounded-pill px-4 py-1 mb-3"><strong><i class="fa fa-check"></i> Attempted : </strong><span >`+alldetailsforbar[i].correctattempted+`</span></small>               
+    <small class="d-inline-block fw-bold text-light text-uppercase bg-danger border border-primary rounded-pill px-4 py-1 mb-3"><strong><i class="fa fa-times"></i> Attempted : </strong><span >`+alldetailsforbar[i].wrongattempted+`</span></small>               
+    <small class="d-inline-block fw-bold text-dark text-uppercase bg-warning border border-primary rounded-pill px-4 py-1 mb-3"><strong><i class="fa fa-circle"></i> Not Attempted : </strong><span >`+alldetailsforbar[i].notattempted+`</span></small>               
+    <small class="d-inline-block fw-bold text-dark text-uppercase bg-info border border-primary rounded-pill px-4 py-1 mb-3"><strong> <i class="fa fa-square"></i> Total Marks : </strong><span >`+alldetailsforbar[i].totalmarks+`</span></small>
+    <small class="d-inline-block fw-bold text-light text-uppercase bg-success border border-primary rounded-pill px-4 py-1 mb-3"><strong><i class="fa fa-check"></i> Marks  : </strong><span >`+alldetailsforbar[i].correct+`</span></small>
+    <small class="d-inline-block fw-bold text-light text-uppercase bg-danger border border-primary rounded-pill px-4 py-1 mb-3"><strong><i class="fa fa-times"></i> Marks  : </strong><span >`+alldetailsforbar[i].wrong+`</span></small>
+    </div></div>
+`;
+        yValues=[];
+        // break;
+    }
+    document.getElementById("showtablestat").innerHTML=l;
+
+
+    new Chart("piestat", {
+        type: "pie",
+        data: {
+          labels: piexValues,
+          datasets: [{
+            backgroundColor: "rgba(141, 136, 3, 0.69)",
+            borderColor: "rgba(0,0,255,0.1)",
+            data: pieyValues
+          }]
+        },
+        options: {
+          title: {
+            display: true,
+            text: "Topic Wise Marks Distribution"
+          }
+        }
+      });
+      
+    // console.log(alldetailsforbar);
+    // for(var i=0;i<question.totalTopics.length;i++){
+    //     yValues.push(alldetailsforbar[i].gotmarks);
+
+    // }
+   
+}
+
+
+
+function showbargraph(canvus,yValues,t){
+    // add a new canvus in the id barstat
+// find maximum of yValues
+// var max = Math.max.apply(null, yValues);
+// var m = Math.max(...yValues);
+// // round of the max to nearest 10
+// m =1;
+// m = Math.ceil(max / 10) * 10;
+// var m= numbers.reduce((max, current) => (current > max ? current : max), yValues[0]);
+var a= yValues[0];
+
+for (let i = 1; i < yValues.length; i++) {
+  if (yValues[i] > a) {
+    a = yValues[i];
+  }
+}
+
+    const xValues = ["Correct Attempted","Wrong Attempted","Not Attempted"];
+    // new Chart(canvus.id, {
+    //     type: "bar",
+    //     data: {
+    //       labels: xValues,
+    //       datasets: [{
+    //         label: t, // This label will appear in the legend
+    //         data: yValues,
+    //         backgroundColor: "rgba(141, 136, 3, 0.69)",
+    //         borderColor: "black",
+    //       }]
+    //     },
+    //     options: {
+    //       responsive: true,
+    //       maintainAspectRatio: false,
+    //       scales: {
+    //         // Customizing x-axis labels
+    //         x: {
+    //           ticks: {
+    //             font: {
+    //               size: 10,  // Font size for x-axis labels
+    //               weight: "bold",  // Font weight for x-axis labels
+    //             }
+    //           }
+    //         },
+    //         // Customizing y-axis labels
+    //         y: {
+    //           ticks: {
+    //             font: {
+    //               size: 30,  // Font size for y-axis labels
+    //               weight: "bold",  // Font weight for y-axis labels
+    //             }
+    //           },yAxes: [{ticks: {min: 6, max:16}}],
+    //         }
+    //       },
+    //       plugins: {
+    //         legend: {
+    //           display: true, // Show the legend
+    //           position: 'top', // Position of the legend (top, left, right, bottom)
+    //           labels: {
+    //             font: {
+    //               size: 16, // Font size for legend labels
+    //               weight: 'bold', // Font weight for legend labels
+    //               family: 'Arial, sans-serif', // Font family for legend labels
+    //             },
+    //             color: '#333', // Color for legend text
+    //           }
+    //         }
+    //       }
+    //     }
+    //   });
+
+
+
+
+      new Chart(canvus.id, {
+        type: "bar",
+        data: {
+          labels: xValues,
+          datasets: [{
+            fill: false,
+            lineTension: 0,
+            label: t, // This label will appear in the legend
+            backgroundColor: "rgba(141, 136, 3, 0.69)",
+            borderColor: "rgba(0,0,255,0.1)",
+            data: yValues
+          }]
+        },
+        options: {
+          legend: {display: true},
+          scales: {
+            yAxes: [{ticks: {min: 0, max:a}}],
+          }
+        }
+      });
+
+
+
+
+      
+}
+function sethw(){
+   var allbars= document.getElementsByClassName("sbar");
+    for(var i=0;i<allbars.length;i++){
+         allbars[i].style.height="300px";
+        //  allbars[i].style.width="800px";
+        allbars[i].style.margin="50px";
+        // allbars[i].style.borderColor="black";
+        // set border color
+        allbars[i].style.border="2px solid black";
+    }
+}
+// showbargraph();
+// var canvas = createCanvas('barstat', 60, 40);
+// showbargraph(canvas);
+// sethw();

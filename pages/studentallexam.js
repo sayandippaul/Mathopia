@@ -45,6 +45,20 @@ var socket = io(url);
       localStorage.setItem("examsetno",setno);
       window.location.href="/studentresult";
     }
+
+    window.isgiven=(setno)=>{
+      var student=JSON.parse(localStorage.getItem('student'));
+      var exams=student.exams;
+      for(var i=0;i<exams.length;i++){
+        if(exams[i].setno==setno){
+          return 1;
+        }
+      }
+      return 0;
+    }
+    
+
+
     // function printexams(obj){
       window.printexams=(obj)=>{
       // obj=allexams;
@@ -65,10 +79,14 @@ var socket = io(url);
                  p=` <button style={{"pointer-events" : "auto"}} onclick="startexam('`+exam.setno+`')" class=" btn btn-success">Start Exam</button>`;
   
               }
-              else if(exam.status==3){
-                 p=` <button style={{"pointer-events" : "auto"}} class=" btn btn-info" onclick="viewresult('`+exam.setno+`')" >view result</button>`;
-  
-              }
+              else if(exam.status==3 && isgiven(exam.setno)==1){
+                p=` <button style={{"pointer-events" : "auto"}} class=" btn btn-info" onclick="viewresult('`+exam.setno+`')" >view result</button>`;
+ 
+             }
+             else if(exam.status==3 && isgiven(exam.setno)==0){
+              p=` <button style={{"pointer-events" : "auto"}} class=" btn btn-danger"  >Exam Ended<br>(Not Given)</button>`;
+
+           }
   
               if (studentbatch.includes(exam.batches[j]) && exam.status!=0 ) {
                   
