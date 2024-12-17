@@ -585,12 +585,13 @@ function makebargraphobjects(question,student){
                                 notattempted++;
                             }
                             else if(question.allquestions[j].oc==anarrgiven[k].ans){
-                                totalcorrect++;
+                                totalcorrect=totalcorrect+parseInt(question.allquestions[j].ocm);
                                 gotmarks=gotmarks+parseInt(question.allquestions[j].ocm);
                                 totalcorrectattempted++;
                             }
                             else{
-                                totalwrong++;
+                                // totalwrong++;
+                                totalwrong=totalwrong+parseInt(question.allquestions[j].owm);
                                 gotmarks=gotmarks-parseInt(question.allquestions[j].owm);
                                 totalwrongattempted++;
                             }
@@ -607,19 +608,22 @@ function makebargraphobjects(question,student){
                                 }
                             }
                             if(count==0){
-                                totalwrong++;
+                                // totalwrong++;
+                                totalwrong=totalwrong+parseInt(question.allquestions[j].owm);
                                 gotmarks=gotmarks-parseInt(question.allquestions[j].owm);
                                 totalwrongattempted++;
                             }
                             else if(count==question.allquestions[j].oc.length){
-                                totalcorrect++;
+                                // totalcorrect++;
+                                totalcorrect=totalcorrect+parseInt(question.allquestions[j].ocm);
                                 gotmarks=gotmarks+parseInt(question.allquestions[j].ocm);
                                 totalcorrectattempted++;
                             }
                             else{
                                 var m=question.allquestions[j].ocm*count/question.allquestions[j].oc.length;
                                 gotmarks=gotmarks+parseInt(m);
-                                totalcorrect++;
+                                // totalcorrect++;
+                                totalcorrect=totalcorrect+parseInt(m);
                                 totalcorrectattempted++;
                             }
                         }
@@ -628,12 +632,14 @@ function makebargraphobjects(question,student){
                                 notattempted++;
                             }
                             else if(question.allquestions[j].oc==anarrgiven[k].ans){
-                                totalcorrect++;
+                                // totalcorrect++;
+                                totalcorrect=totalcorrect+parseInt(question.allquestions[j].ocm);
                                 gotmarks=gotmarks+parseInt(question.allquestions[j].ocm);
                                 totalcorrectattempted++;
                             }
                             else{
-                                totalwrong++;
+                                // totalwrong++;
+                                totalwrong=totalwrong+parseInt(question.allquestions[j].owm);
                                 gotmarks=gotmarks-parseInt(question.allquestions[j].owm);
                                 totalwrongattempted++;
                             }
@@ -682,7 +688,7 @@ function showbargraphforall(q,s){
     <small class="d-inline-block fw-bold text-light text-uppercase bg-danger border border-primary rounded-pill px-4 py-1 mb-3"><strong><i class="fa fa-times"></i> Attempted : </strong><span >`+alldetailsforbar[i].wrongattempted+`</span></small>               
     <small class="d-inline-block fw-bold text-dark text-uppercase bg-warning border border-primary rounded-pill px-4 py-1 mb-3"><strong><i class="fa fa-circle"></i> Not Attempted : </strong><span >`+alldetailsforbar[i].notattempted+`</span></small>               
     <small class="d-inline-block fw-bold text-dark text-uppercase bg-info border border-primary rounded-pill px-4 py-1 mb-3"><strong> <i class="fa fa-square"></i> Total Marks : </strong><span >`+alldetailsforbar[i].totalmarks+`</span></small>
-    <small class="d-inline-block fw-bold text-light text-uppercase bg-success border border-primary rounded-pill px-4 py-1 mb-3"><strong><i class="fa fa-check"></i> Marks  : </strong><span >`+alldetailsforbar[i].gotmarks+`</span></small>
+    <small class="d-inline-block fw-bold text-light text-uppercase bg-success border border-primary rounded-pill px-4 py-1 mb-3"><strong><i class="fa fa-check"></i> Marks  : </strong><span >`+alldetailsforbar[i].correct+`</span></small>
     <small class="d-inline-block fw-bold text-light text-uppercase bg-danger border border-primary rounded-pill px-4 py-1 mb-3"><strong><i class="fa fa-times"></i> Marks  : </strong><span >`+alldetailsforbar[i].wrong+`</span></small>
     </div></div>
 `;
