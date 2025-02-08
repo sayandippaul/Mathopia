@@ -24,6 +24,58 @@ useEffect(() => {
 var socket = io(url);
   if (!hasRun.current) {
     hasRun.current = true;
+
+
+    
+
+    function login(){
+
+      var sid = JSON.parse(localStorage.getItem('student')).sid;;
+      var password = JSON.parse(localStorage.getItem('student')).password;
+      if(sid=="" || password==""){
+          // alert("Please fill all the fields");
+          return;
+      }
+      var object={
+          sid:sid,
+          password:password
+      }
+   
+      fetch(url+"/login", {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Headers": "Content-Type",
+            "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+            "Access-Control-Allow-Origin": "*",
+          },
+          body: JSON.stringify(object)
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+          if(data.status==0){
+            // alert("Invalid Credentials");
+             }
+          else{
+            // alert("Welcome "+data[0].name);
+            
+            localStorage.setItem("student",JSON.stringify(data[0]));
+            // window.location.reload();
+        
+          }
+          // showbuttons();
+        
+  
+        
+          })
+          .catch((err) => console.log(err));
+      
+  
+  }
+    login();  
+
     socket.on('startexam', (setno) => {
       for(var i=0;i<allexams.length;i++){
         if(allexams[i].setno==setno){
