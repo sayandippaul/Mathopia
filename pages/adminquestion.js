@@ -9,6 +9,7 @@ import { useState, useEffect,useRef } from 'react';
  
 // // });
 import io from 'socket.io-client';
+
 import { get } from 'http';
 import { set } from 'mongoose';
 // socket.emit('message', "message");
@@ -25,20 +26,26 @@ var Adminquestion = () => {
   var [selectedBatches,setselectedBatches]=useState([]);
   var [examDetails,setexamDetails]=useState([]);
   var [link,setlink]=useState("");
+  var [nextqimg,setnextqimg]=useState(false);
   var [previoustopic,setprevioustopic]=useState("");
-  link="";
+  // link="https://drive.google.com/drive/folders/1H5GINsij2GKF3yd-zDS8MzJW3mFr3K1z";
+  if(!nextqimg) link="https://drive.google.com/file/d/1CNhoWmz4kek06My-5KEXkT6eoOhpEJkA/view?usp=drive_link";
+
   var hasRun = useRef(false);
 
 
   // var url = "http://localhost:5000";
   var url="https://mathopia.onrender.com";
 var socket = io(url);
-
+nextqimg=false;
 
 useEffect(() => {
   if (!hasRun.current) {
     hasRun.current = true;
   setprevioustopic("");
+  // //alert(nextqimg);
+
+
 
 
 
@@ -52,7 +59,7 @@ useEffect(() => {
 
 
 document.getElementById("showdetailsupload").innerHTML=`
-<button  id="showbutton" type="button" onclick="upload()"   class="form-group col-md-4 btn btn-primary mt-4 " style="height:40px">Upload Question</button>
+<button  id="showbutton" type="button" onclick="upload()"   class="form-group col-md-4 btn btn-primary mt-4 " >Upload Question</button>
                             <br/>
                                     <div class="progress-container" style="margin-top: 5px;
                                   " id="progress-container">
@@ -145,6 +152,7 @@ function setendstatus(setno){
           Accept: "application/json",
           "Content-Type": "application/json",
           "Access-Control-Allow-Headers": "Content-Type",
+
           "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
           "Access-Control-Allow-Origin": "*",
         },
@@ -763,7 +771,14 @@ document.getElementById("selectoptionsetquestion").value=examDetails.edo;
       console.log(examDetails); 
       //do the stuff 
       uploadfinalquestion();
-      link="";
+      // link="https://drive.google.com/drive/folders/1H5GINsij2GKF3yd-zDS8MzJW3mFr3K1z";
+// link="https://drive.google.com/file/d/1CNhoWmz4kek06My-5KEXkT6eoOhpEJkA/view?usp=drive_link";
+if(!nextqimg) link="https://drive.google.com/file/d/1CNhoWmz4kek06My-5KEXkT6eoOhpEJkA/view?usp=drive_link";
+//  //alert(nextqimg);
+
+
+
+
       addQuestion();
       // You can do anything you want with the examDetails object
   // Now you can perform any further actions, like sending the data to a server or processing it further.
@@ -859,9 +874,9 @@ document.getElementById("ocm").value=examDetails.edcm;
 document.getElementById("owm").value=examDetails.edwm;
 document.getElementById("questiontype").value=examDetails.edq;
 document.getElementById("selectoptionsetquestion").value=examDetails.edo;
-
+console.log(link+" "+extractIdFromLink(link)+" "+"https://drive.google.com/file/d/"+extractIdFromLink(link)+"/preview");
 document.getElementById("showeditimg").innerHTML=`
-                            <iframe style={{"height":"200px"}}  src="https://drive.google.com/file/d/`+link+`/preview"  class="img-fluid w-100 "    allow="autoplay" allowfullscreen></iframe>
+                            <iframe style={{"height":"200px"}}  src="https://drive.google.com/file/d/`+extractIdFromLink(link)+`/preview"  class="img-fluid w-100 "    allow="autoplay" allowfullscreen></iframe>
  `;
 
 
@@ -879,8 +894,17 @@ document.getElementById("showeditimg").innerHTML=`
                                               if(previoustopic!=""){
                                                   document.getElementById("printquestiontopic").value=previoustopic;
                                               }
-link="";
+// link="https://drive.google.com/file/d/1CNhoWmz4kek06My-5KEXkT6eoOhpEJkA/view?usp=drive_link";
+if(!nextqimg){
+
+  
+ link="https://drive.google.com/file/d/1CNhoWmz4kek06My-5KEXkT6eoOhpEJkA/view?usp=drive_link";
+
 document.getElementById("qimg").value="";
+//  //alert(nextqimg);
+
+
+}
 }
 
 
@@ -942,7 +966,14 @@ if(correctAnswers.length==0){
       questionObject.oc = correctAnswers;
   }
 
-  link="";
+  // link="https://drive.google.com/drive/folders/1H5GINsij2GKF3yd-zDS8MzJW3mFr3K1z";
+// link="https://drive.google.com/file/d/1CNhoWmz4kek06My-5KEXkT6eoOhpEJkA/view?usp=drive_link";
+if(!nextqimg) link="https://drive.google.com/file/d/1CNhoWmz4kek06My-5KEXkT6eoOhpEJkA/view?usp=drive_link";
+ //alert(nextqimg);
+
+
+
+
 
   return questionObject;
 }
@@ -1090,7 +1121,14 @@ var printpdf="";
   window.viewquestion=(examDetails)=>{
     examDetails=examDetails;
     console.log(examDetails.status);
-    link="";
+    // link="https://drive.google.com/drive/folders/1H5GINsij2GKF3yd-zDS8MzJW3mFr3K1z";
+// link="https://drive.google.com/file/d/1CNhoWmz4kek06My-5KEXkT6eoOhpEJkA/view?usp=drive_link";
+if(!nextqimg) link="https://drive.google.com/file/d/1CNhoWmz4kek06My-5KEXkT6eoOhpEJkA/view?usp=drive_link";
+ //alert(nextqimg);
+
+
+
+
     var z=printbatchesofexam();
     var p="";
     for(var k=0;k<z.length;k++){
@@ -1874,6 +1912,15 @@ window.extractIdFromLink =(link) =>{
   });
   return batchDetails;     
 }
+
+
+window.nextqimgset=()=>{
+  var val=document.getElementById("nextqimg").checked;
+  nextqimg=val;
+  // //alert(nextqimg);
+
+}
+
   
   
   
@@ -2206,7 +2253,7 @@ link=sharableLink;
 console.log('Sharable link:', sharableLink);
 //  document.getElementById('curl'+i).value=sharableLink;
 
-alert("File uploaded successfully now click save video/notes to share with students");
+alert("Question Image uploaded successfully");
 // uploadbutton.disabled = false;
 
       } else {
@@ -3409,7 +3456,7 @@ value="3"
                                 placeholder="Enter Question body text here"
                               ></textarea>
                             </div>
-                            <div className="form-group col-6">
+                            <div className="form-group col-4">
                               <label htmlFor="topic1"> question Image</label>
 
                               <input
@@ -3419,7 +3466,25 @@ value="3"
                                 placeholder="Enter Question body image here"
                               />
                             </div>
-                            <div id="showdetailsupload" className="form-group col-4">
+                            {/* create a checkbox and get the value of that input */}
+                            {/* create a checkbox and get the value of that input */}
+                            {/* create a checkbox */}
+                            {/* <div className="form-group col-6">
+                              save the image for next question
+                              <input
+                                type="checkbox"
+                                id="saveimg"
+                                className="form-control"
+                                placeholder="save image for next question"
+                              />
+
+          
+                              </div>
+                            
+                             */}
+
+                            
+                            <div id="showdetailsupload"  className="form-group col-6">
                               {/* <label > Upload</label> */}
                               {/* <button
                                 type="button"
@@ -3442,6 +3507,12 @@ value="3"
 
                               
                             </div>
+
+                            <div class="form-check form-switch"  onClick={() => nextqimgset()}>
+  <input class="form-check-input" type="checkbox" role="switch" value="" id="nextqimg"  ></input>
+  <label class="form-check-label" for="flexSwitchCheckChecked">Use this image for next question</label>
+</div>
+
                             <div id="showeditimg"  className="form-group col-12">
 
                             <iframe style={{"height":"200px"}}  src="https://drive.google.com/file/d/1CNhoWmz4kek06My-5KEXkT6eoOhpEJkA/preview" class="img-fluid w-100 "    allow="autoplay" allowfullscreen></iframe>

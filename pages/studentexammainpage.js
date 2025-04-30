@@ -340,7 +340,11 @@ function calctime(startDay, startTime, durationMinutes) {
                         .catch((error) => {
                             console.error('Error:', error);
                         });
-                        window.location.href = "/studentallexam";
+                        // window.location.href = "/studentallexam";
+                        window.location.assign("/studentallexam");
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 1000); // Reloads after 1 second
 
         
                     }
@@ -384,7 +388,11 @@ fetch(url+"/startexambystudent", {
     console.log(ansarr);
     if(data.issub=="1" || data.issub==1){
         alert("You have already submitted the exam");
-        window.location.href = "/studentallexam";
+        // window.location.href = "/studentallexam";
+        window.location.assign("/studentallexam");
+        setTimeout(() => {
+            window.location.reload();
+        }, 1000); // Reloads after 1 second
     }
 
     show(1);
@@ -1169,7 +1177,11 @@ fetch(url+"/startexambystudent", {
                     alert("paper submitted successfully.")
                     uploadoptiontodatabase("1");
                     // conf();
-                    window.location.href = "/studentallexam";
+                    // window.location.href = "/studentallexam";
+                    window.location.assign("/studentallexam");
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1000); // Reloads after 1 second
                 }
         
             }
@@ -1379,7 +1391,11 @@ fetch(url+"/startexambystudent", {
                 if(data==object.setno){
                 alert("Exam Ended By Admin");
                 uploadoptiontodatabase("1");
+                // window.location.assign("/studentallexam");
                 window.location.assign("/studentallexam");
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000); // Reloads after 1 second
             }
 
             });
@@ -1480,13 +1496,18 @@ fetch(url+"/startexambystudent", {
     setexam(object);
     if(object.status<2){
         alert("Exam not started");
-        window.location.href="/studentallexam";
+        window.location.assign("/studentallexam");
+setTimeout(() => {
+    window.location.reload();
+}, 1000); // Reloads after 1 second
         return;
     }
     if(object.status>2){
         alert("Exam ended");
-        window.location.href="/studentallexam";
-        return;
+ window.location.assign("/studentallexam");
+setTimeout(() => {
+    window.location.reload();
+}, 1000); // Reloads after 1 second        return;
     }
 console.log(object);
 quesgo=object.allquestions;
