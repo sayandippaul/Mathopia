@@ -123,19 +123,19 @@
 > ## 🧪 Demo & Preview
 
 📸 **Screenshots**
-![Mathopia Website](images/image_2025-04-30_11-58-18.png)
+![Mathopia Website](website images/image_2025-04-30_11-58-18.png)
 
-![Admin Dashboard View](images/photo_2025-04-30_12-35-06.jpg)
+![Admin Dashboard View](website images/photo_2025-04-30_12-35-06.jpg)
 
-![Exam Creation Interface](images/image_2025-04-30_12-00-45.png)
+![Exam Creation Interface](website images/image_2025-04-30_12-00-45.png)
 
-![Student Profile](images/image_2025-04-30_00-40-10.png)
+![Student Profile](website images/image_2025-04-30_00-40-10.png)
 
-![Notification](images/photo_2025-04-30_12-34-28.jpg)
+![Notification](website images/photo_2025-04-30_12-34-28.jpg)
 
-![Exam Attempt Screen (MCQ)](images/exam-page.png)
+![Exam Attempt Screen (MCQ)](website images/exam-page.png)
 
-![Graphical Exam Result View](images/image_2025-04-30_12-07-24.png)
+![Graphical Exam Result View](website images/image_2025-04-30_12-07-24.png)
 > 🎥 **Demo Video**  
 > _[Insert YouTube Link Here]_  
 > *(Thumbnail will be shown automatically)*
